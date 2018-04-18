@@ -6,6 +6,8 @@
     "@types/jqrangeslider": "^5.7.31",
     "bootstrap": "^4.1.0",
     "jqrangeslider": "^5.7.5",
+    "mongo": "^0.1.0",
+    "mongoose": "^5.0.15",
     "npm": "^5.8.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
