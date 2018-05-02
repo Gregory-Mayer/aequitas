@@ -26,7 +26,7 @@ class App extends Component {
   state = {users: []}
 
   componentDidMount() {
-    fetch('/users')
+    fetch('/crimes')
       .then(res => res.json())
       .then(users => this.setState({ users }));
   }
