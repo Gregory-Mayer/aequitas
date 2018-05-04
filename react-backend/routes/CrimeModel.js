@@ -4,8 +4,8 @@ mongoose.set('debug', true)
 
 var CrimeSchema = new mongoose.Schema(
 	{
-	crimedate: {type: Date, required: true},
-	crimetime: {type: Date, required: true},
+	crimedate: {type: String, required: true},
+	crimetime: {type: String, required: true},
 	crimecode: {type: String, required: true, max: 10},
 	location: {type: String, required: true, max: 50},
 	description: {type: String, required: true, max: 50},
@@ -18,7 +18,8 @@ var CrimeSchema = new mongoose.Schema(
 	latitude: {type: Number, required: true, max: 20},
 	location_1: {type: String, max: 50},
 	premise: {type: String, max: 15},
-	total_incidents: {type: Number, required: true, max: 5}
+	total_incidents: {type: Number, required: true, max: 5},
+	threatlevel: {type: String, max: 15}
 	}//, { collection: 'Crime' }
 );
 
