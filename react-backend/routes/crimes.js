@@ -22,9 +22,9 @@ router.get('/', function(req, res, next) {
 	var location_1Rec = req.query.location_1;
 	var premiseRec = req.query.premise;
 	var total_incidentsRec = req.query.total_incidents;
-	
+
  if(crimedateRec && crimetimeRec && crimecodeRec && locationRec && descriptionRec && inside_outsideRec && weaponRec && postRec && districtRec && neighborhoodRec && longitudeRec && latitudeRec && location_1Rec && premiseRec && total_incidentsRec){
-  Crime.find({/*$and: [ {month: monthRec}, {year: yearRec}]*/}, function(err, crimes) {  
+  Crime.find({/*$and: [ {month: monthRec}, {year: yearRec}]*/}, function(err, crimes) {
    if (err){
     res.send(err);
 	console.log(err);
@@ -36,7 +36,7 @@ router.get('/', function(req, res, next) {
   }).limit(5000);
  }
   else{
-   Crime.find({/*$and: [ {month: monthRec}, {year: yearRec}]*/}, function(err, crimes) {  
+   Crime.find({/*$and: [ {month: monthRec}, {year: yearRec}]*/}, function(err, crimes) {
     if (err){
      res.send(err);
 	 console.log(err);
@@ -45,8 +45,8 @@ router.get('/', function(req, res, next) {
     //var crimeList = [crimes];
     //console.log('no query' + crimes);
     res.json(crimes);
-   }).limit(5000);
-  
+	}).limit(5000);
+
   }
 });
 
