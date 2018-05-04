@@ -6,7 +6,7 @@ mongoose.connect("mongodb://ec2-34-230-59-155.compute-1.amazonaws.com:27017/Crim
 var Crime = require('./CrimeModel');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-	console.log(req);
+	console.log(req.query);
 	var crimedateRec = req.query.crimedate;
 	var crimetimeRec = req.query.crimetime;
 	var crimecodeRec = req.query.crimecode;
@@ -31,9 +31,9 @@ router.get('/', function(req, res, next) {
    }
    console.log(">>>>>>>>>>>>>>>>>");
    //var crimeList = [crimes];
-   console.log('Query' + crimes);
+   //console.log('Query' + crimes);
    res.json(crimes);
-  }).limit(10);
+  }).limit(5000);
  }
   else{
    Crime.find({/*$and: [ {month: monthRec}, {year: yearRec}]*/}, function(err, crimes) {  
@@ -43,9 +43,9 @@ router.get('/', function(req, res, next) {
     }
     console.log(">>>>>>>>>>>>>>>>>");
     //var crimeList = [crimes];
-    console.log('no query' + crimes);
+    //console.log('no query' + crimes);
     res.json(crimes);
-   }).limit(10);
+   }).limit(5000);
   
   }
 });

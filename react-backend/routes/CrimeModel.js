@@ -4,7 +4,7 @@ mongoose.set('debug', true)
 
 var CrimeSchema = new mongoose.Schema(
 	{
-	crimedate: {type: Date, required: true},
+	crimedate: {type: String, required: true},
 	crimetime: {type: Date, required: true},
 	crimecode: {type: String, required: true, max: 10},
 	location: {type: String, required: true, max: 50},

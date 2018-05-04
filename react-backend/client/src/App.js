@@ -1,46 +1,102 @@
-// import React, { Component } from 'react';
-// import logo from './logo.svg';
-// import './App.css';
-
-// class App extends Component {
-  // render() {
-    // return (
-      // <div className="App">
-        // <header className="App-header">
-          // <img src={logo} className="App-logo" alt="logo" />
-          // <h1 className="App-title">Welcome to React</h1>
-        // </header>
-        // <p className="App-intro">
-          // To get started, edit <code>src/App.js</code> and save to reload.
-        // </p>
-      // </div>
-    // );
-  // }
-// }
-
-// export default App;
 import React, { Component } from 'react';
 import './App.css';
+import Header from './components/Header.js';
+import SliderContainer from './components/SliderContainer';
+import Footer from './components/Footer.js';
+import Sidebar from './components/Sidebar.js';
+import Main from './components/Main.js'
 
-class App extends Component {
-  state = {users: []}
+const baseURL = "/crimes";
 
-  componentDidMount() {
-    fetch('/crimes')
-      .then(res => res.json())
-      .then(users => this.setState({ users }));
-  }
+// Bundles separate components for the app
+export default class App extends Component {
+	constructor(props) {
+		super(props);
 
-  render() {
-    return (
-      <div className="App">
-        <h1>Crimes</h1>
-		 {this.state.users.map(user =>
-          <div key={user._id}>{user.crimedate}</div>
-        )}
-	  </div>
-    );
-  }
+		this.state = {
+			isLoaded: false,
+			data: [],
+			// Filters
+			filters: {
+				weapon: [],
+      	description: [],
+      	district: [],
+      	insideOutside: []
+			}
+		};
+	}
+
+	updateData(newURL) {
+		fetch(newURL)
+			.then(res => res.json())
+			.then(
+				(result) => {
+					this.setState({
+						isLoaded: true,
+						data: result
+					});
+				}
+			)
+	}
+
+	componentDidMount() {
+		this.updateData(baseURL);
+	}
+
+	filterCallback = (newFilters) => {
+		this.setState({filters: newFilters});
+
+		var url = baseURL;
+		var weapon = this.state.filters.weapon;
+		var description = this.state.filters.description;
+		var district = this.state.filters.district;
+		var insideOutside = this.state.filters.insideOutside;
+		// Add weapon filters to url
+		if (weapon.length > 0) {
+			for (let i = 0; i < weapon.length; i++) {
+				console.log("updating weapon filter")
+				url = url + "&weapon=" + weapon[i];
+			}
+		}
+		// Add description filters to url
+		if (description.length > 0) {
+			for (let i = 0; i < description.length; i++) {
+				console.log("updating description filter")
+				url = url + "&description=" + description[i];
+			}
+		}
+		// Add district filters to url
+		if (district.length > 0) {
+			for (let i = 0; i < district.length; i++) {
+				console.log("updating distric filter")
+				url = url + "&district=" + district[i];
+			}
+		}
+		// Add insideOutside filters to url
+		if (insideOutside.length > 0) {
+			for (let i = 0; i < insideOutside.length; i++) {
+				console.log("updating insideOutside filter")
+				url = url + "&inside_outside=" + insideOutside[i];
+			}
+		}
+		console.log(url);
+		this.updateData(url);
+	}
+
+
+	render(props) {
+		const { isLoaded, data } = this.state;
+		if (!isLoaded) {
+			return <div>Loading...</div>
+		} else {
+			return (
+				<div className="App">
+					<Header />
+		      <SliderContainer />
+					<Sidebar filterCallback={ this.filterCallback }/>
+					<Main data={ data }/>
+				</div>
+			);
+		}
+	}
 }
-
-export default App;
