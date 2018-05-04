@@ -23,20 +23,20 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
-  state = {crimes: []}
+  state = {users: []}
 
   componentDidMount() {
     fetch('/crimes')
       .then(res => res.json())
-      .then(crimes => this.setState({ crimes }));
+      .then(users => this.setState({ users }));
   }
 
   render() {
     return (
       <div className="App">
         <h1>Crimes</h1>
-		 {this.state.crimes.map(crime =>
-          <div key={crime._id}>{crime.crimedate + ' ' + crime.description + ' ' + crime.weapon + ' ' + crime.district + ' ' + crime.threatlevel}</div>
+		 {this.state.users.map(user =>
+          <div key={user._id}>{user.crimedate}</div>
         )}
 	  </div>
     );
