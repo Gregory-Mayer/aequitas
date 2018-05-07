@@ -6,14 +6,11 @@ import 'react-table/react-table.css';
 export default class TableContainer extends Component {
   render() {
     const columns = [{
+      Header: 'Crime type',
+      accessor: 'description'
+    }, {
       Header: 'Weapon',
       accessor: 'weapon',
-    }, {
-      Header: 'Code',
-      accessor: 'crimecode'
-    }, {
-      Header: 'Crime Type',
-      accessor: 'description'
     }, {
       Header: 'Time',
       accessor: 'crimetime'
@@ -27,8 +24,8 @@ export default class TableContainer extends Component {
       Header: 'Inside/Outside',
       accessor: 'inside_outside'
     }, {
-      Header: 'Post',
-      accessor: 'post'
+      Header: 'Threat level',
+      accessor: 'threatlevel'
     }]
     return (
 			<div className="tableContainer">

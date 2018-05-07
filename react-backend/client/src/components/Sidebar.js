@@ -10,13 +10,15 @@ export default class Sidebar extends Component {
   			weapon: [],
         description: [],
         district: [],
-        inside_outside: []
+        inside_outside: [],
+        threatlevel: []
       }
 		};
     this.handleWeaponChange = this.handleWeaponChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleDistrictChange = this.handleDistrictChange.bind(this);
     this.handleIOChange = this.handleIOChange.bind(this);
+    this.handleThreatChange = this.handleThreatChange.bind(this);
 	}
 
   componentDidMount() {
@@ -65,6 +67,17 @@ export default class Sidebar extends Component {
       }
     } else {
       this.state.filters.inside_outside.push(event.target.value);
+    }
+    this.props.filterCallback(this.state.filters);
+  }
+  handleThreatChange(event) {
+    if (this.state.filters.threatlevel.includes(event.target.value)) {
+      var index = this.state.filters.threatlevel.indexOf(event.target.value);
+      if (index > -1) {
+        this.state.filters.threatlevel.splice(index, 1);
+      }
+    } else {
+      this.state.filters.threatlevel.push(event.target.value);
     }
     this.props.filterCallback(this.state.filters);
   }
@@ -130,6 +143,13 @@ export default class Sidebar extends Component {
             <input type="checkbox" value="Inside" onChange={this.handleIOChange}  />Inside<br/>
             <input type="checkbox" value="Outside" onChange={this.handleIOChange}  />Outside<br/>
             <input type="checkbox" value="null" onChange={this.handleIOChange}  />Undefined<br/>
+          </form>
+        </Collapsible><br/>
+        <Collapsible trigger={<button>Threat level ▼</button>}>
+          <form>
+            <input type="checkbox" value="LOW" onChange={this.handleIOChange}  />Low<br/>
+            <input type="checkbox" value="MEDIUM" onChange={this.handleIOChange}  />Medium<br/>
+            <input type="checkbox" value="HIGH" onChange={this.handleIOChange}  />High<br/>
           </form>
         </Collapsible><br/>
 			</div>

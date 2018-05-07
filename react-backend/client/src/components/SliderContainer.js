@@ -7,7 +7,6 @@ import 'rc-slider/assets/index.css';
 export default class SliderContainer extends Component {
   constructor(props) {
   	super(props);
-    console.log(this.props.dates)
 		this.state = {
       minDate: 0,
       maxDate: this.props.dates.length - 1,
@@ -32,14 +31,14 @@ export default class SliderContainer extends Component {
   }
 
   componentDidMount() {
-    this.sendSliderData();
+    //this.sendSliderData();
   }
 
   render() {
     return (
 			<div className="sliderContainer">
         <div className="dateContainer">
-          Date: {this.state.dates[this.state.minDate]} - {this.state.dates[this.state.maxDate - 1]}
+          Date: {this.state.dates[this.state.minDate]} - {this.state.dates[this.state.maxDate]}
           <Range className="dateRange"
             min={0}
             max={this.state.dates.length - 1}

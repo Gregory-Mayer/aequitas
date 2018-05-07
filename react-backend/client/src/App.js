@@ -21,7 +21,8 @@ export default class App extends Component {
 				weapon: [],
       	description: [],
       	district: [],
-      	inside_outside: []
+      	inside_outside: [],
+				threatlevel: []
 			},
 			dates: [],
 			dateValues: {
@@ -35,7 +36,7 @@ export default class App extends Component {
 		this.updateData(baseURL);
 	}
 
-	updateData(newURL, filters) {
+	updateData(newURL) {
 		var filterObject = {
 			date: {
 				start: null,
@@ -46,16 +47,18 @@ export default class App extends Component {
 				end: this.state.dateValues.maxTime
 			},
 			weapon: this.state.filters.weapon,
-			description: this.state.filters.weapon,
+			description: this.state.filters.description,
 			district: this.state.filters.district,
 			inside_outside: this.state.filters.inside_outside,
 			threatLevel: this.state.filters.threatLevel
 		}
 
-		if (this.state.dateValues.minDate) {
+		if (this.state.dateValues.minDate != null) {
 			filterObject.date.start = this.state.dates[this.state.dateValues.minDate];
 			filterObject.date.end = this.state.dates[this.state.dateValues.maxDate]
 		}
+
+		console.log("filter object:", filterObject)
 
 		fetch(newURL,{method: "POST", body: filterObject})
 			.then(res => res.json())
@@ -72,7 +75,7 @@ export default class App extends Component {
 	componentDidUpdate() {
 		console.log("Updated, displaying state:")
 		console.log(this.state);
-		
+
 		// Update dates if it hasn't been updated yet
 		if ((!this.state.isLoaded) && (this.state.dates.length === 0)) {
 			var data = this.state.data;
@@ -96,15 +99,20 @@ export default class App extends Component {
 	}
 
 	sliderCallback = (newSliderValues) => {
-		this.setState({
-			dateValues: newSliderValues
-		});
+		console.log("app got slider values: ", newSliderValues)
+		this.state.dateValues.minDate = newSliderValues.minDate;
+		this.state.dateValues.maxDate = newSliderValues.maxDate;
+		this.state.dateValues.minTime = newSliderValues.minTime;
+		this.state.dateValues.maxTime = newSliderValues.maxTime;
+
+		this.updateData(baseURL);
 	}
 
 	filterCallback = (newFilters) => {
 		this.setState({
 			filters: newFilters
 		});
+		this.updateData(baseURL);
 	}
 
 	render(props) {
