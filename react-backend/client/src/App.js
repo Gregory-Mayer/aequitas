@@ -66,42 +66,6 @@ export default class App extends Component {
 		this.setState({
 			filters: newFilters
 		});
-
-		var url = baseURL;
-		var weapon = this.state.filters.weapon;
-		var description = this.state.filters.description;
-		var district = this.state.filters.district;
-		var inside_outside = this.state.filters.inside_outside;
-		// Add weapon filters to url
-		if (weapon.length > 0) {
-			for (let i = 0; i < weapon.length; i++) {
-				console.log("updating weapon filter")
-				url = url + "&weapon=" + weapon[i];
-			}
-		}
-		// Add description filters to url
-		if (description.length > 0) {
-			for (let i = 0; i < description.length; i++) {
-				console.log("updating description filter")
-				url = url + "&description=" + description[i];
-			}
-		}
-		// Add district filters to url
-		if (district.length > 0) {
-			for (let i = 0; i < district.length; i++) {
-				console.log("updating distric filter")
-				url = url + "&district=" + district[i];
-			}
-		}
-		// Add inside_outside filters to url
-		if (inside_outside.length > 0) {
-			for (let i = 0; i < inside_outside.length; i++) {
-				console.log("updating inside_outside filter")
-				url = url + "&inside_outside=" + inside_outside[i];
-			}
-		}
-		console.log(url);
-		this.updateData(url);
 	}
 
 	render(props) {

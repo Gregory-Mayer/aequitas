@@ -72,7 +72,7 @@ export default class Sidebar extends Component {
   render() {
     return (
 			<div className="sidebar">
-        <h2>Filters</h2>
+        <h3>Filters</h3>
         <Collapsible trigger={<button>Weapon ▼</button>}>
           <form>
             <input type="checkbox" value="FIREARM" onChange={this.handleWeaponChange}  />Firearm<br/>

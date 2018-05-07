@@ -28,9 +28,13 @@ export default class Header extends Component {
   render() {
     return (
 			<div className="header">
-				<button>JUSTICE</button>
-        <button type="button" onClick={ this.openHelpDialog }>Help</button>
-        <button type="button" onClick={ this.openContactDialog }>Contact Us</button>
+        <div>
+				  <h2>JUSTICE</h2>
+        </div>
+        <div>
+          <button style={{float: 'right'}} onClick={ this.openHelpDialog }>Help</button>
+          <button style={{float: 'right'}} onClick={ this.openContactDialog }>Contact Us</button>
+        </div>
         {
         this.state.isShowingHelp &&
         <ModalContainer onClose={this.handleHelpClose}>

@@ -17,15 +17,14 @@ export default class SliderContainer extends Component {
         dates.push(data[i].crimedate);
       }
     }
-
-    console.log(dates);
+    dates.sort();
 
 		this.state = {
       minDate: 0,
-      maxDate: dates.length,
+      maxDate: dates.length - 1,
       minTime: 0,
       maxTime: 48,
-      dates: dates.sort()
+      dates: dates
     }
 	};
   updateTime = (value) => {
@@ -51,11 +50,11 @@ export default class SliderContainer extends Component {
     return (
 			<div className="sliderContainer">
         <div className="dateContainer">
-          Date : {this.state.dates[this.state.minDate]} - {this.state.dates[this.state.maxDate - 1]}
+          Date: {this.state.dates[this.state.minDate]} - {this.state.dates[this.state.maxDate - 1]}
           <Range className="dateRange"
             min={0}
             max={this.state.dates.length - 1}
-            defaultValue={[0,this.state.dates.length - 1]}
+            defaultValue={[this.state.minDate, this.state.maxDate]}
             pushable={1}
             onChange={this.updateDate}
             onAfterChange={this.sendSliderData}
