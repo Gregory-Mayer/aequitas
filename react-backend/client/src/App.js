@@ -6,7 +6,7 @@ import Footer from './components/Footer.js';
 import Sidebar from './components/Sidebar.js';
 import Main from './components/Main.js'
 
-const baseURL = "/crimes";
+const baseURL = "https://data.baltimorecity.gov/resource/4ih5-d5d5.json?$limit=5000";
 
 // Bundles separate components for the app
 export default class App extends Component {
@@ -21,13 +21,21 @@ export default class App extends Component {
 				weapon: [],
       	description: [],
       	district: [],
-      	insideOutside: []
+      	inside_outside: []
+			},
+			dateValues: {
+				minDate: 0,
+				maxDate: 100,
+				minTime: 0,
+				maxTime: 48
 			}
 		};
 	}
 
 	updateData(newURL) {
-		fetch(newURL)
+		fetch(newURL, {
+  		method: 'GET'
+		})
 			.then(res => res.json())
 			.then(
 				(result) => {
@@ -43,14 +51,27 @@ export default class App extends Component {
 		this.updateData(baseURL);
 	}
 
+	componentDidUpdate() {
+		console.log("Updated, displaying state:")
+    console.log(this.state);
+	}
+
+	sliderCallback = (newSliderValues) => {
+		this.setState({
+			dateValues: newSliderValues
+		});
+	}
+
 	filterCallback = (newFilters) => {
-		this.setState({filters: newFilters});
+		this.setState({
+			filters: newFilters
+		});
 
 		var url = baseURL;
 		var weapon = this.state.filters.weapon;
 		var description = this.state.filters.description;
 		var district = this.state.filters.district;
-		var insideOutside = this.state.filters.insideOutside;
+		var inside_outside = this.state.filters.inside_outside;
 		// Add weapon filters to url
 		if (weapon.length > 0) {
 			for (let i = 0; i < weapon.length; i++) {
@@ -72,11 +93,11 @@ export default class App extends Component {
 				url = url + "&district=" + district[i];
 			}
 		}
-		// Add insideOutside filters to url
-		if (insideOutside.length > 0) {
-			for (let i = 0; i < insideOutside.length; i++) {
-				console.log("updating insideOutside filter")
-				url = url + "&inside_outside=" + insideOutside[i];
+		// Add inside_outside filters to url
+		if (inside_outside.length > 0) {
+			for (let i = 0; i < inside_outside.length; i++) {
+				console.log("updating inside_outside filter")
+				url = url + "&inside_outside=" + inside_outside[i];
 			}
 		}
 		console.log(url);
@@ -92,7 +113,7 @@ export default class App extends Component {
 			return (
 				<div className="App">
 					<Header />
-		      <SliderContainer />
+		      <SliderContainer sliderCallback={ this.sliderCallback }/>
 					<Sidebar filterCallback={ this.filterCallback }/>
 					<Main data={ data }/>
 				</div>

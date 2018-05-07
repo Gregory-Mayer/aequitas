@@ -10,7 +10,7 @@ export default class Sidebar extends Component {
   			weapon: [],
         description: [],
         district: [],
-        insideOutside: []
+        inside_outside: []
       }
 		};
     this.handleWeaponChange = this.handleWeaponChange.bind(this);
@@ -58,13 +58,13 @@ export default class Sidebar extends Component {
     this.props.filterCallback(this.state.filters);
   }
   handleIOChange(event) {
-    if (this.state.filters.insideOutside.includes(event.target.value)) {
-      var index = this.state.filters.insideOutside.indexOf(event.target.value);
+    if (this.state.filters.inside_outside.includes(event.target.value)) {
+      var index = this.state.filters.inside_outside.indexOf(event.target.value);
       if (index > -1) {
-        this.state.filters.insideOutside.splice(index, 1);
+        this.state.filters.inside_outside.splice(index, 1);
       }
     } else {
-      this.state.filters.insideOutside.push(event.target.value);
+      this.state.filters.inside_outside.push(event.target.value);
     }
     this.props.filterCallback(this.state.filters);
   }
@@ -80,7 +80,7 @@ export default class Sidebar extends Component {
             <input type="checkbox" value="FIRE" onChange={this.handleWeaponChange}  />Fire<br/>
             <input type="checkbox" value="OTHER" onChange={this.handleWeaponChange}  />Other<br/>
             <input type="checkbox" value="HANDS" onChange={this.handleWeaponChange}  />Hands<br/>
-            <input type="checkbox" value="" onChange={this.handleWeaponChange}  />No weapon<br/>
+            <input type="checkbox" value="null" onChange={this.handleWeaponChange}  />No weapon<br/>
           </form>
         </Collapsible><br/>
         <Collapsible trigger={<button>Description ▼</button>}>
@@ -122,14 +122,14 @@ export default class Sidebar extends Component {
             <input type="checkbox" value="WESTERN" onChange={this.handleDistrictChange}  />Western<br/>
             <input type="checkbox" value="NORTHWESTERN" onChange={this.handleDistrictChange}  />Northwestern<br/>
             <input type="checkbox" value="CENTRAL" onChange={this.handleDistrictChange}  />Central<br/>
-            <input type="checkbox" value="" onChange={this.handleDistrictChange}  />Undefined<br/>
+            <input type="checkbox" value="null" onChange={this.handleDistrictChange}  />Undefined<br/>
           </form>
         </Collapsible><br/>
         <Collapsible trigger={<button>Inside/Outside ▼</button>}>
           <form>
-            <input type="checkbox" value="INSIDE" onChange={this.handleIOChange}  />Inside<br/>
-            <input type="checkbox" value="OUTSIDE" onChange={this.handleIOChange}  />Outside<br/>
-            <input type="checkbox" value="" onChange={this.handleIOChange}  />Undefined<br/>
+            <input type="checkbox" value="Inside" onChange={this.handleIOChange}  />Inside<br/>
+            <input type="checkbox" value="Outside" onChange={this.handleIOChange}  />Outside<br/>
+            <input type="checkbox" value="null" onChange={this.handleIOChange}  />Undefined<br/>
           </form>
         </Collapsible><br/>
 			</div>
