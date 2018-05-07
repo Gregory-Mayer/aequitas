@@ -19,7 +19,6 @@ export default class Map extends Component {
 
 	componentDidUpdate() {
 		var data = this.props.data;
-		this.state.heatMapData = [];
 		for(var i = 0; i < data.length; i++) {
 			if (data[i].latitude != null) {
 				var lat = data[i].latitude;

@@ -1,30 +1,19 @@
 import React, { Component } from 'react';
 //import RangeSlider from 'react-dual-rangeslider';
-import { Range, createSliderWithTooltip } from 'rc-slider';
+import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
-
-const RangeWithTooltip = createSliderWithTooltip(Range);
 
 // Contains the sliders for filtering date and time
 export default class SliderContainer extends Component {
   constructor(props) {
   	super(props);
-
-    var data = this.props.data;
-    var dates = [];
-    for (let i = 0; i < data.length; i++) {
-      if (!dates.includes(data[i].crimedate)) {
-        dates.push(data[i].crimedate);
-      }
-    }
-    dates.sort();
-
+    console.log(this.props.dates)
 		this.state = {
       minDate: 0,
-      maxDate: dates.length - 1,
+      maxDate: this.props.dates.length - 1,
       minTime: 0,
       maxTime: 48,
-      dates: dates
+      dates: this.props.dates
     }
 	};
   updateTime = (value) => {

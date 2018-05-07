@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './components/Header.js';
 import SliderContainer from './components/SliderContainer';
-import Footer from './components/Footer.js';
 import Sidebar from './components/Sidebar.js';
 import Main from './components/Main.js'
 
@@ -24,23 +23,46 @@ export default class App extends Component {
       	district: [],
       	inside_outside: []
 			},
+			dates: [],
 			dateValues: {
-				minDate: 0,
-				maxDate: 100,
-				minTime: 0,
-				maxTime: 48,
-				dates: []
+				minDate: null,
+				maxDate: null,
+				minTime: null,
+				maxTime: null,
 			}
 		};
+
+		this.updateData(baseURL);
 	}
 
 	updateData(newURL, filters) {
-		fetch(newURL,{method: "POST", body: filters})
+		var filterObject = {
+			date: {
+				start: null,
+				end: null
+			},
+			time: {
+				start: this.state.dateValues.minTime,
+				end: this.state.dateValues.maxTime
+			},
+			weapon: this.state.filters.weapon,
+			description: this.state.filters.weapon,
+			district: this.state.filters.district,
+			inside_outside: this.state.filters.inside_outside,
+			threatLevel: this.state.filters.threatLevel
+		}
+
+		if (this.state.dateValues.minDate) {
+			filterObject.date.start = this.state.dates[this.state.dateValues.minDate];
+			filterObject.date.end = this.state.dates[this.state.dateValues.maxDate]
+		}
+
+		fetch(newURL,{method: "POST", body: filterObject})
 			.then(res => res.json())
 			.then(
 				(result) => {
 					this.setState({
-						isLoaded: true,
+						//isLoaded: true,
 						data: result
 					});
 				}
@@ -50,10 +72,27 @@ export default class App extends Component {
 	componentDidUpdate() {
 		console.log("Updated, displaying state:")
 		console.log(this.state);
+		
+		// Update dates if it hasn't been updated yet
+		if ((!this.state.isLoaded) && (this.state.dates.length === 0)) {
+			var data = this.state.data;
+	    var dates = [];
+	    for (let i = 0; i < data.length; i++) {
+	      if (!dates.includes(data[i].crimedate)) {
+	        dates.push(data[i].crimedate);
+	      }
+	    }
+	    this.setState({
+				dates: dates.sort(),
+				isLoaded: true
+			});
+			console.log("Loaded dates:", this.state.dates)
+		}
+
 	}
 
 	componentDidMount() {
-		this.updateData(baseURL);
+		//this.updateData(baseURL);
 	}
 
 	sliderCallback = (newSliderValues) => {
@@ -76,7 +115,7 @@ export default class App extends Component {
 			return (
 				<div className="App">
 					<Header />
-		      <SliderContainer sliderCallback={ this.sliderCallback } data={ data }/>
+		      <SliderContainer sliderCallback={ this.sliderCallback } dates={ this.state.dates }/>
 					<Sidebar filterCallback={ this.filterCallback }/>
 					<Main data={ data }/>
 				</div>
