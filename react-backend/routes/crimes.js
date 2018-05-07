@@ -1,53 +1,61 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require("mongoose");
+var bodyParser = require('body-parser')
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://ec2-34-230-59-155.compute-1.amazonaws.com:27017/CrimeData");
 var Crime = require('./CrimeModel');
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-	// console.log(req.query);
-	// var crimedateRec = req.query.crimedate;
-	// var crimetimeRec = req.query.crimetime;
-	// var crimecodeRec = req.query.crimecode;
-	// var locationRec = req.query.location;
-	// var descriptionRec = req.query.description;
-	// var inside_outsideRec = req.query.inside_outside;
-	// var weaponRec = req.query.weapon;
-	// var postRec = req.query.post;
-	// var districtRec = req.query.district;
-	// var neighborhoodRec = req.query.neighborhood;
-	// var longitudeRec = req.query.longitude;
-	// var latitudeRec = req.query.latitude;
-	// var location_1Rec = req.query.location_1;
-	// var premiseRec = req.query.premise;
-	// var total_incidentsRec = req.query.total_incidents;
- //
- // if(crimedateRec && crimetimeRec && crimecodeRec && locationRec && descriptionRec && inside_outsideRec && weaponRec && postRec && districtRec && neighborhoodRec && longitudeRec && latitudeRec && location_1Rec && premiseRec && total_incidentsRec){
- //  Crime.find({/*$and: [ {month: monthRec}, {year: yearRec}]*/}, function(err, crimes) {
- //   if (err){
- //    res.send(err);
-	// console.log(err);
- //   }
- //   console.log(">>>>>>>>>>>>>>>>>");
- //   //var crimeList = [crimes];
- //   //console.log('Query' + crimes);
- //   res.json(crimes);
- //  }).limit(5000);
- // }
- //  else{
-   Crime.find({/*$and: [ {month: monthRec}, {year: yearRec}]*/}, function(err, crimes) {
-    if (err){
-     res.send(err);
-	 console.log(err);
-    }
-    console.log(">>>>>>>>>>>>>>>>>");
-    //var crimeList = [crimes];
-    //console.log('no query' + crimes);
-    res.json(crimes);
-	}).limit(5000);
-
-//  }
+/* GET crimes listing. */
+//router.get('/', function(req, res, next) {
+//   Crime.find({}, function(err, crimes) {  
+//    if (err){
+//     res.send(err);
+//	 console.log(err);
+//    }
+//    res.json(crimes);
+//   }).limit(5000);
+//});
+///* post crimes listing. */
+router.post('/', function(req, res, next) {
+	console.log(req.body);
+	// var crimeDate = {};
+	// crimeDate.$gt = '2018-01-01T00:00:00.000';
+	// crimeDate.$lt = '2018-05-04T00:00:00.000';
+	// var query = {crimeDate};
+	//if( req.body.crimedate && req.body.crimedate != ''){
+	//	query.crimedate.$gt =  req.body.crimedate.start;
+	//  query.crimedate.$lt =  req.body.crimedate.end;
+	//}
+	//if( req.body.crimetime && req.body.crimetime != ''){
+	//	query.crimetime.$gt =  req.body.crimetime.start;
+	//	query.crimetime.$lt =  req.body.crimetime.end;
+	//}
+	//if( req.body.description && req.body.description != ''){
+	//	query.description =  req.body.description;
+	//}
+	//if( req.body.district && req.body.district != ''){
+	//	query.district =  req.body.district;
+	//}
+	//if( req.body.inside_outside && req.body.inside_outside != ''){
+	//	query.inside_outside =  req.body.inside_outside;
+	//}
+	//if( req.body.weapon && req.body.weapon != ''){
+	//	query.weapon =  req.body.weapon;
+	//}
+	//if( req.body.threatlevel && req.body.threatlevel != ''){
+	//	query.threatlevel =  req.body.threatlevel;
+	//}
+  Crime.find(/*query*/{}, function(err, crimes) {  
+   if (err){
+    res.send(err);
+	console.log(err);
+   }
+   console.log(">>>>>>>>>>>>>>>>>");
+   //var crimeList = [crimes];
+   //console.log('Query' + crimes);
+   res.json(crimes);
+  }).limit(8000);
+ 
 });
 
 

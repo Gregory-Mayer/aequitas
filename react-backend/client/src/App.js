@@ -35,7 +35,7 @@ export default class App extends Component {
 	}
 
 	updateData(newURL) {
-		fetch(newURL, /*{method: "POST"}*/)
+		fetch(newURL, {method: "POST"})
 			.then(res => res.json())
 			.then(
 				(result) => {
