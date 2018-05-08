@@ -11,7 +11,7 @@ export default class SliderContainer extends Component {
       minDate: 0,
       maxDate: this.props.dates.length - 1,
       minTime: 0,
-      maxTime: 48,
+      maxTime: 24,
       dates: this.props.dates
     }
 	};
@@ -52,8 +52,8 @@ export default class SliderContainer extends Component {
           Time (hours): {this.state.minTime} - {this.state.maxTime}
           <Range className="timeRange"
             min={0}
-            max={48}
-            defaultValue={[0,48]}
+            max={24}
+            defaultValue={[0,24]}
             pushable={1}
             onChange={this.updateTime}
             onAfterChange={this.sendSliderData}

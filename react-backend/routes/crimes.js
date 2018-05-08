@@ -5,16 +5,16 @@ var bodyParser = require('body-parser')
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://ec2-34-230-59-155.compute-1.amazonaws.com:27017/CrimeData");
 var Crime = require('./CrimeModel');
-/* GET crimes listing. */
-//router.get('/', function(req, res, next) {
-//   Crime.find({}, function(err, crimes) {  
-//    if (err){
-//     res.send(err);
-//	 console.log(err);
-//    }
-//    res.json(crimes);
-//   }).limit(5000);
-//});
+// GET crimes listing. */
+router.get('/', function(req, res, next) {
+   Crime.find({}, function(err, crimes) {  
+    if (err){
+     res.send(err);
+	 console.log(err);
+    }
+    res.json(crimes);
+   }).limit(5000);
+});
 ///* post crimes listing. */
 router.post('/', function(req, res, next) {
 	//console.log("HERE");
@@ -41,7 +41,7 @@ router.post('/', function(req, res, next) {
 	console.log(minDate);
 	var maxTime;
 	var minTime;
-	if(req.body.time.end == null){
+	if(req.body.time.end == null || !(req.body.time.end)){
 		maxTime = '24:00:00';
 	}
 	else{
@@ -49,8 +49,9 @@ router.post('/', function(req, res, next) {
 		if(maxTime.length < 8){
 			maxTime = '0' + maxTime
 		}
+		
 	}
-	if(req.body.time.start == null){
+	if(req.body.time.start == null || !(req.body.time.start)){
 		minTime = '00:00:00';
 	}
 	else{
@@ -59,6 +60,7 @@ router.post('/', function(req, res, next) {
 			minTime = '0' + minTime
 		}
 	}
+	query.crimetime = { '$lt' : maxTime, '$gt' : minTime, };
 	console.log(maxTime);
 	console.log(minTime);
 	if( req.body.description && req.body.description != '' && req.body.description != []){
@@ -88,9 +90,9 @@ router.post('/', function(req, res, next) {
 			//var crimeList = [crimes];
 			//console.log('Query' + crimes);
 			res.json(crimes);
-			}).where('crimedate').gt(minDate).lt(maxDate).where('crimetime').gt(minTime).lt(maxTime).limit(100);
+			}).maxTime(10000).where('crimedate').gt(minDate).lt(maxDate)/*.where('crimetime').gt(minTime).lt(maxTime)*/.limit(5000);
 	}
-	if(query){
+	else if(query){
 		Crime.find(query, function(err, crimes) {  
 			if (err){
 				res.send(err);
@@ -100,7 +102,7 @@ router.post('/', function(req, res, next) {
 			//var crimeList = [crimes];
 			//console.log('Query' + crimes);
 			res.json(crimes);
-			}).where('crimetime').gt(minTime).lt(maxTime).limit(100);
+			}).maxTime(10000)/*.where('crimetime').gt(minTime).lt(maxTime)*/.limit(5000);
 	}
 	else{
 		Crime.find({}, function(err, crimes) {  
@@ -112,7 +114,7 @@ router.post('/', function(req, res, next) {
 		//var crimeList = [crimes];
 		//console.log('Query' + crimes);
 		res.json(crimes);
-		}).limit(8000);
+		}).maxTime(10000).limit(8000);
 	}
 });
 
