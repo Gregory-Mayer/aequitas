@@ -59,8 +59,8 @@ export default class App extends Component {
 		}
 
 		console.log("filter object:", filterObject)
-
-		fetch(newURL,{method: "POST", body: filterObject})
+		
+		fetch(newURL,{method: "POST", headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, body: JSON.stringify(filterObject)})
 			.then(res => res.json())
 			.then(
 				(result) => {

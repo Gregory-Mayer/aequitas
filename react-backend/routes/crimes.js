@@ -19,11 +19,14 @@ var Crime = require('./CrimeModel');
 router.post('/', function(req, res, next) {
 	//console.log("HERE");
 	//console.log(req.body);
-	// var crimeDate = {};
-	// crimeDate.$gt = '2018-01-01T00:00:00.000';
-	// crimeDate.$lt = '2018-05-04T00:00:00.000';
-	 var query = {};
-	console.log(query);
+	// var gt = '2018-01-01';
+	// var lt = '2018-05-04';
+	var query = {};
+	// console.log(query);
+	var maxDate = Crime.find({}).sort({crimedate : -1}).limit(1);
+	var minDate = Crime.find({}).sort({crimedate : 1}).limit(1);
+	console.log(maxDate);
+	console.log(minDate);
 	//if( req.body.crimedate && req.body.crimedate != ''){
 	//	query.crimedate.$gt =  req.body.crimedate.start;
 	//  query.crimedate.$lt =  req.body.crimedate.end;
@@ -44,8 +47,8 @@ router.post('/', function(req, res, next) {
 	if( req.body.weapon && req.body.weapon != '' && req.body.weapon != []){
 		query.weapon =  req.body.weapon;
 	}
-	//if( req.body.threatlevel && req.body.threatlevel != '' && req.body.threatlevel != []){
-	//	query.threatlevel =  req.body.threatlevel;
+	//if( req.body.threatLevel && req.body.threatLevel != '' && req.body.threatLevel != []){
+	//	query.threatlevel =  req.body.threatLevel;
 	//}
 	console.log(query);
 	if(query){
@@ -58,7 +61,7 @@ router.post('/', function(req, res, next) {
 			//var crimeList = [crimes];
 			//console.log('Query' + crimes);
 			res.json(crimes);
-			}).limit(8000);
+			}).limit(100);//.where('crimedate').gt(gt).lt(lt).where('crimeTime').gt(crimeTime.gt).lt(crimeTime.lt).limit(8000);
 	}
 	else{
 		Crime.find({}, function(err, crimes) {  
