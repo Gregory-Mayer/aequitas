@@ -59,7 +59,7 @@ export default class App extends Component {
 		}
 
 		console.log("filter object:", filterObject)
-		
+
 		fetch(newURL,{method: "POST", headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, body: JSON.stringify(filterObject)})
 			.then(res => res.json())
 			.then(
@@ -122,7 +122,7 @@ export default class App extends Component {
 		} else {
 			return (
 				<div className="App">
-					<Header />
+					<Header filters={ this.state.filters }/>
 		      <SliderContainer sliderCallback={ this.sliderCallback } dates={ this.state.dates }/>
 					<Sidebar filterCallback={ this.filterCallback }/>
 					<Main data={ data }/>

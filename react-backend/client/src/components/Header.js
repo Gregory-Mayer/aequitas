@@ -32,6 +32,12 @@ export default class Header extends Component {
 				  <h2>JUSTICE</h2>
         </div>
         <div>
+          Filters applied: {
+            this.props.filters.weapon.length > 0 &&
+            <p>Weapon: {this.props.filters.weapon}</p>
+          }
+        </div>
+        <div>
           <button style={{float: 'right'}} onClick={ this.openHelpDialog }>Help</button>
           <button style={{float: 'right'}} onClick={ this.openContactDialog }>Contact Us</button>
         </div>
