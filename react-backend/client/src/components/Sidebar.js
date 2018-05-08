@@ -147,9 +147,9 @@ export default class Sidebar extends Component {
         </Collapsible><br/>
         <Collapsible trigger={<button>Threat level ▼</button>}>
           <form>
-            <input type="checkbox" value="LOW" onChange={this.handleIOChange}  />Low<br/>
-            <input type="checkbox" value="MEDIUM" onChange={this.handleIOChange}  />Medium<br/>
-            <input type="checkbox" value="HIGH" onChange={this.handleIOChange}  />High<br/>
+            <input type="checkbox" value="LOW" onChange={this.handleThreatChange}  />Low<br/>
+            <input type="checkbox" value="MEDIUM" onChange={this.handleThreatChange}  />Medium<br/>
+            <input type="checkbox" value="HIGH" onChange={this.handleThreatChange}  />High<br/>
           </form>
         </Collapsible><br/>
 			</div>
