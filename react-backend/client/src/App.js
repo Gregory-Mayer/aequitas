@@ -39,8 +39,8 @@ export default class App extends Component {
 	updateData(newURL) {
 		var filterObject = {
 			date: {
-				start: null,
-				end: null
+				start: '',
+				end: ''
 			},
 			time: {
 				start: this.state.dateValues.minTime,
@@ -50,7 +50,7 @@ export default class App extends Component {
 			description: this.state.filters.description,
 			district: this.state.filters.district,
 			inside_outside: this.state.filters.inside_outside,
-			threatLevel: this.state.filters.threatLevel
+			threatlevel: this.state.filters.threatlevel
 		}
 
 		if (this.state.dateValues.minDate != null) {

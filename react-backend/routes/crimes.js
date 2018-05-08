@@ -21,6 +21,7 @@ router.post('/', function(req, res, next) {
 	//console.log(req.body);
 	// var gt = '2018-01-01';
 	// var lt = '2018-05-04';
+	//	console.log(req.body);
 	var query = {};
 	// console.log(query);
 	var maxDate = Crime.find({}).sort({crimedate : -1}).limit(1);
@@ -47,15 +48,15 @@ router.post('/', function(req, res, next) {
 	if( req.body.weapon && req.body.weapon != '' && req.body.weapon != []){
 		query.weapon =  req.body.weapon;
 	}
-	//if( req.body.threatLevel && req.body.threatLevel != '' && req.body.threatLevel != []){
-	//	query.threatlevel =  req.body.threatLevel;
-	//}
-	console.log(query);
+	if( req.body.threatlevel && req.body.threatlevel != '' && req.body.threatlevel != []){
+		query.threatlevel = { '$in' : req.body.threatlevel};
+	}
+	//console.log(query);
 	if(query){
 		Crime.find(query, function(err, crimes) {  
 			if (err){
 				res.send(err);
-				console.log(err);
+			//	console.log(err);
 			}
 			//console.log(">>>>>>>>>>>>>>>>>");
 			//var crimeList = [crimes];
@@ -67,7 +68,7 @@ router.post('/', function(req, res, next) {
 		Crime.find({}, function(err, crimes) {  
 		if (err){
 			res.send(err);
-			console.log(err);
+		//	console.log(err);
 		}
 		//console.log(">>>>>>>>>>>>>>>>>");
 		//var crimeList = [crimes];
