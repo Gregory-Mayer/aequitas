@@ -23,36 +23,38 @@ router.post('/', function(req, res, next) {
 	// var lt = '2018-05-04';
 	//	console.log(req.body);
 	var query = {};
-	if(req.body.date.end == null){
-		console.log('Here in max Date');
-		var maxDate = Crime.find({}).sort({crimedate : -1}).limit(1);
+	var maxDate;
+	var minDate
+	if(req.body.date.end == ''){
+		maxDate = '';
 	}
 	else{
-		var maxDate = req.body.date.end;
+		maxDate = req.body.date.end;
 	}
-	if(req.body.date.start == null){
-		console.log('Here in min Date');
-		var minDate = Crime.find({}).sort({crimedate : 1}).limit(1);
+	if(req.body.date.start == ''){
+		minDate = '';
 	}
 	else{
-		var minDate = req.body.date.start;
+		minDate = req.body.date.start;
 	}
 	console.log(maxDate);
 	console.log(minDate);
+	var maxTime;
+	var minTime;
 	if(req.body.time.end == null){
-		var maxTime = '24:00:00';
+		maxTime = '24:00:00';
 	}
 	else{
-		var maxTime = req.body.time.end + ':00:00';
+		maxTime = req.body.time.end + ':00:00';
 		if(maxTime.length < 8){
 			maxTime = '0' + maxTime
 		}
 	}
 	if(req.body.time.start == null){
-		var minTime = '00:00:00';
+		minTime = '00:00:00';
 	}
 	else{
-		var minTime = req.body.time.start + ':00:00';
+		minTime = req.body.time.start + ':00:00';
 		if(minTime.length < 8){
 			minTime = '0' + minTime
 		}
@@ -74,7 +76,20 @@ router.post('/', function(req, res, next) {
 	if( req.body.threatlevel && req.body.threatlevel != '' && req.body.threatlevel != []){
 		query.threatlevel = { '$in' : req.body.threatlevel};
 	}
-	//console.log(query);
+	console.log(maxDate);
+	console.log(minDate);
+	if(query && minDate != '' && maxDate != ''){
+		Crime.find(query, function(err, crimes) {  
+			if (err){
+				res.send(err);
+			//	console.log(err);
+			}
+			//console.log(">>>>>>>>>>>>>>>>>");
+			//var crimeList = [crimes];
+			//console.log('Query' + crimes);
+			res.json(crimes);
+			}).where('crimedate').gt(minDate).lt(maxDate).where('crimetime').gt(minTime).lt(maxTime).limit(100);
+	}
 	if(query){
 		Crime.find(query, function(err, crimes) {  
 			if (err){
@@ -85,7 +100,7 @@ router.post('/', function(req, res, next) {
 			//var crimeList = [crimes];
 			//console.log('Query' + crimes);
 			res.json(crimes);
-			}).where('crimetime').gt(minTime).lt(maxTime).limit(100);//.where('crimedate').gt(minDate).lt(maxDate).where('crimetime').gt(minTime).lt(maxTime).limit(100);
+			}).where('crimetime').gt(minTime).lt(maxTime).limit(100);
 	}
 	else{
 		Crime.find({}, function(err, crimes) {  
