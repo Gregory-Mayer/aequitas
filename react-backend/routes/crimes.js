@@ -23,19 +23,42 @@ router.post('/', function(req, res, next) {
 	// var lt = '2018-05-04';
 	//	console.log(req.body);
 	var query = {};
-	// console.log(query);
-	var maxDate = Crime.find({}).sort({crimedate : -1}).limit(1);
-	var minDate = Crime.find({}).sort({crimedate : 1}).limit(1);
+	if(req.body.date.end == null){
+		console.log('Here in max Date');
+		var maxDate = Crime.find({}).sort({crimedate : -1}).limit(1);
+	}
+	else{
+		var maxDate = req.body.date.end;
+	}
+	if(req.body.date.start == null){
+		console.log('Here in min Date');
+		var minDate = Crime.find({}).sort({crimedate : 1}).limit(1);
+	}
+	else{
+		var minDate = req.body.date.start;
+	}
 	console.log(maxDate);
 	console.log(minDate);
-	//if( req.body.crimedate && req.body.crimedate != ''){
-	//	query.crimedate.$gt =  req.body.crimedate.start;
-	//  query.crimedate.$lt =  req.body.crimedate.end;
-	//}
-	//if( req.body.crimetime && req.body.crimetime != ''){
-	//	query.crimetime.$gt =  req.body.crimetime.start;
-	//	query.crimetime.$lt =  req.body.crimetime.end;
-	//}
+	if(req.body.time.end == null){
+		var maxTime = '24:00:00';
+	}
+	else{
+		var maxTime = req.body.time.end + ':00:00';
+		if(maxTime.length < 8){
+			maxTime = '0' + maxTime
+		}
+	}
+	if(req.body.time.start == null){
+		var minTime = '00:00:00';
+	}
+	else{
+		var minTime = req.body.time.start + ':00:00';
+		if(minTime.length < 8){
+			minTime = '0' + minTime
+		}
+	}
+	console.log(maxTime);
+	console.log(minTime);
 	if( req.body.description && req.body.description != '' && req.body.description != []){
 		query.description =  req.body.description;
 	}
@@ -62,7 +85,7 @@ router.post('/', function(req, res, next) {
 			//var crimeList = [crimes];
 			//console.log('Query' + crimes);
 			res.json(crimes);
-			}).limit(100);//.where('crimedate').gt(gt).lt(lt).where('crimeTime').gt(crimeTime.gt).lt(crimeTime.lt).limit(8000);
+			}).where('crimetime').gt(minTime).lt(maxTime).limit(100);//.where('crimedate').gt(minDate).lt(maxDate).where('crimetime').gt(minTime).lt(maxTime).limit(100);
 	}
 	else{
 		Crime.find({}, function(err, crimes) {  
