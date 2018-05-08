@@ -90,7 +90,7 @@ router.post('/', function(req, res, next) {
 			//var crimeList = [crimes];
 			//console.log('Query' + crimes);
 			res.json(crimes);
-			}).maxTime(10000).where('crimedate').gt(minDate).lt(maxDate)/*.where('crimetime').gt(minTime).lt(maxTime)*/.limit(5000);
+			}).maxTime(10000).where('crimedate').gt(minDate).lt(maxDate);///*.where('crimetime').gt(minTime).lt(maxTime)*/.limit(5000);
 	}
 	else if(query){
 		Crime.find(query, function(err, crimes) {  
@@ -102,7 +102,7 @@ router.post('/', function(req, res, next) {
 			//var crimeList = [crimes];
 			//console.log('Query' + crimes);
 			res.json(crimes);
-			}).maxTime(10000)/*.where('crimetime').gt(minTime).lt(maxTime)*/.limit(5000);
+			}).maxTime(10000);//.where('crimetime').gt(minTime).lt(maxTime).limit(5000);
 	}
 	else{
 		Crime.find({}, function(err, crimes) {  
@@ -114,7 +114,7 @@ router.post('/', function(req, res, next) {
 		//var crimeList = [crimes];
 		//console.log('Query' + crimes);
 		res.json(crimes);
-		}).maxTime(10000).limit(8000);
+		}).maxTime(10000);//.limit(8000);
 	}
 });
 
