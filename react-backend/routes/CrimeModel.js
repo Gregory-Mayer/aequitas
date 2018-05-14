@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
+mongoose.set('debug', true)
 
-var Schema = mongoose.Schema;
 
-var CrimeSchema = new Schema(
+var CrimeSchema = new mongoose.Schema(
 	{
-	crimedate: {type: Date, required: true},
-	crimetime: {type: Date, required: true},
+	crimedate: {type: String, required: true},
+	crimetime: {type: String, required: true},
 	crimecode: {type: String, required: true, max: 10},
 	location: {type: String, required: true, max: 50},
 	description: {type: String, required: true, max: 50},
@@ -16,12 +16,13 @@ var CrimeSchema = new Schema(
 	neighborhood: {type: String, required: true, max: 50},
 	longitude: {type: Number, required: true, max: 20},
 	latitude: {type: Number, required: true, max: 20},
-	location_1: {type: Mixed},
+	location_1: {type: String, max: 50},
 	premise: {type: String, max: 15},
 	total_incidents: {type: Number, required: true, max: 5}
-	}
+	}//, { collection: 'Crime' }
 );
 
 
 //Export model
-module.exports = mongoose.model('Crime', CrimeSchema);
+ var CrimeModel = mongoose.model('Crime', CrimeSchema);
+ module.exports = CrimeModel;
